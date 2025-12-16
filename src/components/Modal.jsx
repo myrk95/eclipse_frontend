@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./Modal.css";
+import {useFetch} from "../services/useFetch"
 
 function Modal({ isOpen, setIsOpen, title, inputs, isLogin = false, onLoginSuccess, onRegisterSuccess }) {
   const handleClose = () => {
@@ -9,6 +10,7 @@ function Modal({ isOpen, setIsOpen, title, inputs, isLogin = false, onLoginSucce
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const form = useFetch()
 
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -16,8 +18,6 @@ function Modal({ isOpen, setIsOpen, title, inputs, isLogin = false, onLoginSucce
     setIsLoading(true);
     
     try {
-      // Simular tiempo de respuesta del servidor
-      await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Validaciones básicas
       if (isLogin) {
@@ -33,49 +33,55 @@ function Modal({ isOpen, setIsOpen, title, inputs, isLogin = false, onLoginSucce
         }
       }
       
-      // Generar un ID de usuario único (simulado)
-      const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
       // Guardar SOLO el userId en sessionStorage
-      sessionStorage.setItem('userId', userId);
-      
-      console.log("✅ userId guardado en sessionStorage:", userId);
-      
-      if (isLogin) {
-        // Notificar al componente padre que el login fue exitoso
-        if (onLoginSuccess) {
-          onLoginSuccess();
-        }
-        
-        alert(`✅ ¡Inicio de sesión exitoso! (ID: ${userId.substring(0, 10)}...)`);
-      } else {
-        // Para registro
-        alert("✅ ¡Registro exitoso! Ahora puedes iniciar sesión.");
-        
-        // Notificar al componente padre que el registro fue exitoso
-        if (onRegisterSuccess) {
-          onRegisterSuccess();
-        }
-      }
-      
-      // Cerrar el modal
-      setIsOpen(false);
-      
-      // Limpiar el formulario
-      if (inputs && inputs.length > 0) {
-        const initialData = {};
-        inputs.forEach(i => {
-          initialData[i.id] = "";
+       form(isLogin ? "login/" : "register/", "POST", formData).then(data => {
+         console.log(data);
+        //  sessionStorage.setItem('userId', userId);
+         
+         console.log("✅ userId guardado en sessionStorage:");
+         
+         if (isLogin) {
+           // Notificar al componente padre que el login fue exitoso
+           if (onLoginSuccess) {
+             onLoginSuccess();
+           }
+           
+           alert(`✅ ¡Inicio de sesión exitoso! (ID: ...)`);
+         } else {
+           // Para registro
+           alert("✅ ¡Registro exitoso! Ahora puedes iniciar sesión.");
+           
+           // Notificar al componente padre que el registro fue exitoso
+           if (onRegisterSuccess) {
+             onRegisterSuccess();
+           }
+         }
+         
+         // Cerrar el modal
+         setIsOpen(false);
+         
+         // Limpiar el formulario
+         if (inputs && inputs.length > 0) {
+           const initialData = {};
+           inputs.forEach(i => {
+             initialData[i.id] = "";
+           });
+           setFormData(initialData);
+         }
+         
+         
+        }).catch(err => {
+          console.error(err)
         });
-        setFormData(initialData);
+      } catch (err) {
+        console.error("Error:", err);
+        setError(err.message || "Error al procesar la solicitud");
+      } finally {
+        setIsLoading(false);
       }
-      
-    } catch (err) {
-      console.error("Error:", err);
-      setError(err.message || "Error al procesar la solicitud");
-    } finally {
-      setIsLoading(false);
-    }
+  
+
     
   }, [formData, isLogin, setIsOpen, inputs, onLoginSuccess, onRegisterSuccess]);
 
