@@ -69,4 +69,5 @@ function Modal({ isOpen, setIsOpen, title, inputs, isLogin=false }) {
   );
 }
 
+
 export default Modal;

@@ -53,4 +53,4 @@ function ScannerPage() {
   );
 }
 
-export default App;
+export default ScannerPage;
