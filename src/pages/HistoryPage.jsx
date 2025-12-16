@@ -1,8 +1,20 @@
-import React from 'react';
+import React  from 'react';
+import {useState, useEffect } from "react";
 import Navbar from '../components/Navbar';
 import './ScannerPage.css';
 
+
+
 const HistoryPage = () => {
+  const [datos, setDatos] = useState([]); 
+  
+  useEffect(() => { 
+    fetch("https://rickandmortyapi.com/api/character/?page=19") 
+    .then(res => res.json()) 
+    .then(data => setDatos(data.results)) 
+    .catch(err => console.error(err)); }, 
+  []); // [] asegura que se ejecute solo una vez al montar
+
   return (
     <div className="scanner-page">
       <Navbar />
@@ -11,21 +23,23 @@ const HistoryPage = () => {
           <h1>Historial de Escaneos</h1>
           <p className="subtitle">Registro de análisis anteriores</p>
         </div>
-        <div style={{ padding: '2rem', background: 'white', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
-          <h2>Página en desarrollo</h2>
-          <p>Aquí se mostrarán tus escaneos anteriores cuando el backend esté listo.</p>
-          <div style={{ marginTop: '2rem', padding: '1rem', background: '#f8f9fa', borderRadius: '8px' }}>
-            <h3>Próximamente:</h3>
-            <ul style={{ marginLeft: '1.5rem', marginTop: '1rem' }}>
-              <li>Lista de escaneos anteriores</li>
-              <li>Filtros por fecha y resultado</li>
-              <li>Comparación de resultados</li>
-              <li>Exportación de reportes</li>
-            </ul>
-          </div>
+      </div>
+      <div className="scanner-list">
+         {datos.length > 0 ? (
+            datos.map((char) => (
+              <div key={char.id} className="scanner-item">
+                <img src={char.image} alt={char.name} />
+                <h3>{char.name}</h3>
+                <p>Estado: {char.status}</p>
+                <p>Especie: {char.species}</p>
+                <p>Origen: {char.origin.name}</p>
+              </div>
+            ))
+          ) : (
+            <p>Cargando personajes...</p>
+          )}
         </div>
       </div>
-    </div>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-// Importa tu logo - ajusta la ruta según tu archivo
 import logo from '../assets/logo.png'; 
+import { NInicioSesion } from "./Modal.jsx";
 
 const Navbar = () => {
   return (
@@ -30,7 +30,7 @@ const Navbar = () => {
         </ul>
         
         <div className="navbar-actions">
-          <button className="btn-profile">👤</button>
+           <NInicioSesion />
         </div>
       </div>
     </nav>

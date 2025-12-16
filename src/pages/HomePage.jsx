@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import './HomePage.css'; // Ahora usa su propio CSS
+import './HomePage.css'; 
+import { InicioSesion } from '../components/Modal';
 
 const HomePage = () => {
+
   return (
     <div className="home-page">
+      <InicioSesion/>
       <Navbar />
       
       <div className="home-container">
@@ -93,5 +96,4 @@ const HomePage = () => {
     </div>
   );
 };
-
 export default HomePage;
