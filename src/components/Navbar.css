@@ -25,7 +25,8 @@
 
 /* Estilos para tu logo personalizado */
 .brand-logo-img {
-  height: 80px; /* Ajusta según el tamaño de tu logo */
+  height: 80px;
+  /* Ajusta según el tamaño de tu logo */
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
@@ -90,24 +91,25 @@
   .navbar-container {
     padding: 0 1rem;
   }
-  
+
   .brand-name {
     font-size: 1.2rem;
   }
-  
+
   .brand-logo-img {
     height: 32px;
   }
-  
+
   .navbar-menu {
     gap: 0.5rem;
   }
-  
+
   .nav-link {
     padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
   }
 }
+
 .navbar-actions {
   display: flex;
   align-items: center;
