@@ -17,21 +17,32 @@ function ScannerPage() {
   return (
   <div className="scanner-page">
       <Navbar/>
-      <div style={{ display: "flex", height: "100vh" }}>
+      <div style={{ display: "flex"}}>
 
         {/* Sección izquierda */}
        <div style={{ flex: 1, padding: "20px", borderRight: "2px solid #ccc" }}>
           <h2>Enviar Imagen</h2>
+          <div className='form-scanner'>
+            <div>
+            <label htmlFor='name' >Nombre</label>
+            <input type="text" name='name' id='name'/>
+            </div>
+            <div>
+            <label htmlFor='description' >Descripcion</label>
+            <input type="text" name='description' id='description'/>
+            </div>
           <input type="file" accept="image/*" onChange={handleImageUpload} />
           {selectedImage && (
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "20px", display: 'flex', justifyContent: 'center'}}>
             <img
               src={selectedImage}
               alt="preview"
-              style={{ maxWidth: "100%", borderRadius: "8px" }}
+              style={{ width: "15rem", borderRadius: "8px" }}
             />
             </div>
           )}
+          <input type='submit' className='button-form' />
+          </div>
       </div>
 
       {/* Sección derecha */}

@@ -190,11 +190,19 @@
     flex-direction: column;
     gap: 1rem;
   }
-  
+
+  .brand-name {
+    font-size: 1.2rem;
+  }
+
+  .brand-logo-img {
+    height: 32px;
+  }
+
   .navbar-menu {
     gap: 0.5rem;
   }
-  
+
   .nav-link {
     padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
@@ -258,4 +266,10 @@
     flex-direction: column;
     width: 100%;
   }
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
 }

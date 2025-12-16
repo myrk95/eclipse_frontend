@@ -42,14 +42,18 @@ const Navbar = () => {
     return location.pathname === path;
   };
 
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand">
-          <img src={logo} alt="Eclipse Logo" className="brand-logo-img" />
+           <Link 
+              to="/" 
+            > <img src={logo} alt="Eclipse Logo" className="brand-logo-img" />
+            </Link>
           <span className="brand-name">ECLIPSE</span>
         </div>
-        
+
         <ul className="navbar-menu">
           <li className="nav-item">
             <Link 

@@ -1,8 +1,8 @@
 import React  from 'react';
 import {useState, useEffect } from "react";
 import Navbar from '../components/Navbar';
-import './ScannerPage.css';
-
+import './History.css';
+import { useFetch } from "../services/useFetch";
 
 
 const HistoryPage = () => {
