@@ -1,47 +1,72 @@
-import React, { useState, useEffect} from "react";
-import "./Modal.css"; // estilos básicos
+import React, { useCallback, useEffect, useState } from "react";
+import "./Modal.css";
+import { useFetch } from "../services/useFetch";
 
-function LoginModal({ isOpen, onClose }) {
+function Modal({ isOpen, setIsOpen, title, inputs, isLogin=false }) {
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  const FormData = useFetch();
+  const [formData, setFormData] = useState({})
+
+  const onSubmit = useCallback(async (e) => {
+    e.preventDefault()
+    console.log(formData);
+    
+    FormData(isLogin ? "login/" : "register/", "POST", formData).then(data => {
+      console.log(data);
+      
+    }).catch(err => {
+      console.error(err)
+    });
+    
+    
+  },[formData, isLogin,  FormData]);
+  
+  useEffect(() => {
+    if (!inputs || inputs.length === 0) return;
+    
+    const initialData = {};
+    inputs.forEach(i => {
+      initialData[i.id] = "";
+    });
+    
+    setFormData(initialData);
+  }, [inputs]);
   if (!isOpen) return null;
-
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Iniciar Sesión</h2>
-        <form>
-          <div className="form-group1">
-            <label htmlFor="email">Correo electrónico</label>
-            <input type="email" id="email" placeholder="tu@email.com" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Contraseña</label>
-            <input type="password" id="password" placeholder="********" />
-          </div>
-          <button type="submit" className="btn">Entrar</button>
-        </form>
-        <button className="close-btn" onClick={onClose}>Cerrar</button>
+        <h2>{title}</h2>
+
+       <form onSubmit={onSubmit}>
+  {inputs.map((input, index) => (
+    <div className="form-group" key={index}>
+      <label htmlFor={input.id}>{input.label}</label>
+      <input
+        type={input.type}
+        id={input.id}
+        placeholder={input.placeholder}
+        value={formData[input.id] || ""}
+        onChange={(e) =>
+          setFormData(prev => ({
+            ...prev,
+            [input.id]: e.target.value
+          }))
+        }
+      />
+    </div>
+  ))}
+
+  <button type="submit" className="btn">Entrar</button>
+</form>
+
+        <button className="close-btn" onClick={handleClose}>
+          Cerrar
+        </button>
       </div>
     </div>
   );
 }
 
-export function InicioSesion() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-    
-  useEffect(() => { setIsModalOpen(true); }, []);
-  return (
-    <div>
-        <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-    </div>
-  );
-};
-
-export function NInicioSesion() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    return (
-        <div>
-            <button className="btn-in" onClick={() => setIsModalOpen(true)}>Iniciar Sesión</button>
-            <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
-        </div>
-    )
-}
+export default Modal;

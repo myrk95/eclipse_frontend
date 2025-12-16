@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import logo from '../assets/logo.png'; 
-import { NInicioSesion } from "./Modal.jsx";
+import logo from '../assets/logo.png';  
+import Modal from './Modal'
 
 const Navbar = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalRegisterOpen, setIsModalRegisterOpen] = useState(false);
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -30,7 +32,26 @@ const Navbar = () => {
         </ul>
         
         <div className="navbar-actions">
-           <NInicioSesion />
+          <button className="btn login-btn" onClick={() => setIsModalOpen(true)}>Iniciar Sesion</button>
+          <a onClick={() => setIsModalRegisterOpen(true)}>Register</a>
+           <Modal 
+           isOpen={isModalOpen}
+           setIsOpen={setIsModalOpen}
+           isLogin={true}
+           title="Iniciar Sesion"
+           inputs={[
+            { id: "email", label: "Correo electrónico", type: "email", placeholder: "Email" },
+            { id: "password", label: "Contraseña", type: "password", placeholder: "Password" }
+           ]}/>
+           <Modal 
+           isOpen={isModalRegisterOpen}
+           setIsOpen={setIsModalRegisterOpen}
+           title="Registrate"
+           inputs={[
+            { id: "username", label: "Nombre de Usuario", type: "text", placeholder: "Nombre Usuario" },
+            { id: "email", label: "Correo electrónico", type: "email", placeholder: "Correo Electronico" },
+            { id: "password", label: "Contraseña", type: "password", placeholder: "Contraseña" }
+           ]}/>
         </div>
       </div>
     </nav>
