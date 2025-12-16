@@ -23,15 +23,13 @@
   text-decoration: none;
 }
 
-/* Estilos para tu logo personalizado */
 .brand-logo-img {
-  height: 80px; /* Ajusta según el tamaño de tu logo */
+  height: 80px;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-/* Efecto hover opcional */
 .brand-logo-img:hover {
   transform: scale(1.05);
 }
@@ -43,7 +41,6 @@
   transition: color 0.3s ease;
 }
 
-/* El resto del CSS permanece igual */
 .navbar-menu {
   display: flex;
   list-style: none;
@@ -71,32 +68,127 @@
   color: #3498db;
 }
 
-.navbar-actions .btn-profile {
-  background: none;
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Estilos para botones cuando NO está logueado */
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-login {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
   border: none;
-  font-size: 1.5rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(52, 152, 219, 0.2);
 }
 
-.navbar-actions .btn-profile:hover {
-  background-color: #f8f9fa;
+.btn-login:hover {
+  background: linear-gradient(135deg, #2980b9, #21618c);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(52, 152, 219, 0.3);
 }
 
-/* Media queries para responsividad */
+.btn-login:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(52, 152, 219, 0.2);
+}
+
+.btn-register {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(46, 204, 113, 0.2);
+}
+
+.btn-register:hover {
+  background: linear-gradient(135deg, #27ae60, #219653);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(46, 204, 113, 0.3);
+}
+
+.btn-register:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(46, 204, 113, 0.2);
+}
+
+/* Estilos para cuando SÍ está logueado */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.user-icon {
+  font-size: 1.2rem;
+  color: #3498db;
+}
+
+.user-id {
+  color: #5d6d7e;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: monospace;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-logout {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(231, 76, 60, 0.2);
+}
+
+.btn-logout:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(231, 76, 60, 0.3);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(231, 76, 60, 0.2);
+}
+
+/* Responsividad */
 @media (max-width: 768px) {
   .navbar-container {
     padding: 0 1rem;
-  }
-  
-  .brand-name {
-    font-size: 1.2rem;
-  }
-  
-  .brand-logo-img {
-    height: 32px;
+    flex-direction: column;
+    gap: 1rem;
   }
   
   .navbar-menu {
@@ -107,10 +199,63 @@
     padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
   }
+  
+  .brand-name {
+    font-size: 1.2rem;
+  }
+  
+  .brand-logo-img {
+    height: 60px;
+  }
+  
+  .navbar-actions {
+    width: 100%;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+  
+  .btn-login,
+  .btn-register,
+  .btn-logout {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .user-section {
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .user-info {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .btn-logout {
+    width: 100%;
+  }
 }
-.navbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  cursor: pointer;
+
+@media (max-width: 480px) {
+  .navbar-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .navbar-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn-login,
+  .btn-register {
+    width: 100%;
+  }
+  
+  .user-section {
+    flex-direction: column;
+    width: 100%;
+  }
 }

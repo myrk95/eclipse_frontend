@@ -1,63 +1,319 @@
+/* Modal.css - Estilo consistente con Navbar y aplicación */
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-content {
   background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 300px;
+  padding: 2.5rem;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideUp 0.4s ease-out;
+  border: 1px solid #e9ecef;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-content h2 {
+  color: #2c3e50;
+  margin-bottom: 1.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 1rem;
+  display: inline-block;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   text-align: left;
 }
-.form-group1 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  text-align: left;
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 input {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.8rem 1rem;
   margin-top: 0.3rem;
+  border: 2px solid #e0e6ed;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: #f8f9fa;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3498db;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+input:hover {
+  border-color: #bdc3c7;
 }
 
 .btn {
   width: 100%;
-  padding: 0.7rem;
-  background: #007bff;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #3498db, #2980b9);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2980b9, #21618c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
 }
 
 .close-btn {
-  margin-top: 1rem;
-  background: transparent;
-  border: none;
-  color: #555;
-  cursor: pointer;
-}
-
-.btn-in {
-    width: 100%;
-  padding: 0.7rem;
-  background: #0cd470;
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
   color: white;
   border: none;
-  border-radius: 4px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 3px 8px rgba(149, 165, 166, 0.2);
+}
+
+.close-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(149, 165, 166, 0.3);
+}
+
+.close-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(149, 165, 166, 0.2);
+}
+
+/* Estilos para errores en el modal */
+.modal-error {
+  background: linear-gradient(135deg, #ffcccc 0%, #ff9999 100%);
+  border: 2px solid #ff6666;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #990000;
+  animation: slideIn 0.3s ease-out;
+  text-align: left;
+}
+
+.error-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.error-text {
+  font-weight: 600;
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Spinner para botón de carga */
+.btn .spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos para campos deshabilitados */
+input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+  border-color: #d5dbdb;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Variante de botón para registro */
+.btn-register {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+.btn-register:hover:not(:disabled) {
+  background: linear-gradient(135deg, #27ae60, #219653);
+  box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
+}
+
+.btn-register:active:not(:disabled) {
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
+}
+
+/* Mejoras para el formulario en móviles */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem;
+    max-width: 100%;
+  }
+  
+  .modal-content h2 {
+    font-size: 1.6rem;
+  }
+  
+  input {
+    padding: 0.7rem 0.9rem;
+  }
+  
+  .btn, .close-btn {
+    padding: 0.8rem;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .modal-content {
+    padding: 1.5rem;
+  }
+  
+  .modal-content h2 {
+    font-size: 1.4rem;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+  }
+  
+  input {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+/* Efecto de pulso para llamar la atención */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.modal-content {
+  animation: slideUp 0.4s ease-out, pulse 0.5s ease-out 0.4s;
+}
+
+/* Transición suave para los cambios en el modal */
+.modal-overlay {
+  transition: background-color 0.3s ease;
+}
+
+/* Estilo para enlaces dentro del modal (si los agregas en el futuro) */
+.modal-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.modal-link:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Separador visual opcional */
+.form-separator {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: #95a5a6;
+  font-size: 0.9rem;
+}
+
+.form-separator::before,
+.form-separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e0e6ed;
+  margin: 0 10px;
 }
