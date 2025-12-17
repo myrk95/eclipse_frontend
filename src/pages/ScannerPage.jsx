@@ -5,6 +5,9 @@ import Navbar from '../components/Navbar';
 function ScannerPage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [response, setResponse] = useState("");
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -13,6 +16,14 @@ function ScannerPage() {
       setResponse("La imagen fue recibida correctamente ✅");
     }
   };
+  const onSubmit = (e) => {
+    e.preventDefault()
+  const name =  document.getElementById("name").value
+    const descripcion = document.getElementById("description").value
+console.log(name, descripcion);
+
+    const formData = new FormData()
+  }
 
   return (
   <div className="scanner-page">
@@ -23,6 +34,8 @@ function ScannerPage() {
        <div style={{ flex: 1, padding: "20px", borderRight: "2px solid #ccc" }}>
           <h2>Enviar Imagen</h2>
           <div className='form-scanner'>
+            <form>
+
             <div>
             <label htmlFor='name' >Nombre</label>
             <input type="text" name='name' id='name'/>
@@ -41,7 +54,8 @@ function ScannerPage() {
             />
             </div>
           )}
-          <input type='submit' className='button-form' />
+          <input type='submit' className='button-form' onClick={onSubmit}/>
+            </form>
           </div>
       </div>
 
