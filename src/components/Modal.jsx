@@ -35,9 +35,9 @@ function Modal({ isOpen, setIsOpen, title, inputs, isLogin = false, onLoginSucce
       
       
       // Guardar SOLO el userId en sessionStorage
-       form(isLogin ? "login/" : "register/", "POST", formData).then(data => {
+       const response = form(isLogin ? "login/" : "register/", "POST", formData).then(data => {
          console.log(data);
-        //  sessionStorage.setItem('userId', userId);
+          sessionStorage.setItem('userId', JSON.stringify(response.user_id));
          
          console.log("✅ userId guardado en sessionStorage:");
          

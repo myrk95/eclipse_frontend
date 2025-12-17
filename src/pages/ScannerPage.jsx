@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ScannerPage.css';
 import Navbar from '../components/Navbar';
+import useFetchData from '../services/useFetch'
 
 function ScannerPage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [response, setResponse] = useState("");
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
+  const [userId, setUserId] = useState(0)
+  const useFetchData = useFetchForm()
 
 
   const handleImageUpload = (event) => {
@@ -18,13 +21,27 @@ function ScannerPage() {
   };
   const onSubmit = (e) => {
     e.preventDefault()
-  const name =  document.getElementById("name").value
-    const descripcion = document.getElementById("description").value
-console.log(name, descripcion);
-
+console.log(name, description);
+    const asset = `mole_${userId}_${Date.now()}.jpg`
     const formData = new FormData()
+    formData.append("nom", name)
+    formData.append("descripcio", description)
+    formData.append("image", {
+      uri: selectedImage,
+      name: asset,
+      type: "image/jpeg"
+    })
+    const response = useFetchData('analysis_result/', formData)
+    console.log("response", response);
+    
   }
-
+  useEffect(() => {
+    const dataUser = async() => {
+      setUserId(JSON.parse(sessionStorage.getItem("userId"))
+      )
+    }
+    dataUser()
+  })
   return (
   <div className="scanner-page">
       <Navbar/>
@@ -38,11 +55,11 @@ console.log(name, descripcion);
 
             <div>
             <label htmlFor='name' >Nombre</label>
-            <input type="text" name='name' id='name'/>
+            <input type="text" name='name' id='name' onChange={(e) => setName(e.target.value)}/>
             </div>
             <div>
             <label htmlFor='description' >Descripcion</label>
-            <input type="text" name='description' id='description'/>
+            <input type="text" name='description' id='description' onChange={(e) => setDescription(e.target.value)}/>
             </div>
           <input type="file" accept="image/*" onChange={handleImageUpload} />
           {selectedImage && (
