@@ -6,8 +6,8 @@ import { useFetchForm } from "../services/useFetch";
 function ScannerPage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageFile, setImageFile] = useState(null); // Estado para el archivo real
-  const [response, setResponse] = useState("");
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [userId, setUserId] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState();
@@ -18,14 +18,13 @@ function ScannerPage() {
     if (file) {
       setImageFile(file); // Guardamos el archivo para enviarlo luego
       setSelectedImage(URL.createObjectURL(file)); // URL solo para previsualización
-      setResponse("La imagen fue recibida correctamente ✅");
     }
   };
   console.log("selectedImage", selectedImage);
   console.log("imageFile", imageFile);
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(name);
+    console.log(name, description);
 
     if (!imageFile) {
       alert("Por favor selecciona una imagen");
@@ -36,6 +35,7 @@ function ScannerPage() {
     try {
       const formData = new FormData();
       formData.append("nom", name);
+      formData.append("descripcio", description);
       // En web se pasa el archivo directo. El tercer parámetro es el nombre del archivo.
       formData.append("image", imageFile, `mole_${userId}_${Date.now()}.jpg`);
       formData.append("user_id", userId);
@@ -72,6 +72,15 @@ function ScannerPage() {
                   name="name"
                   id="name"
                   onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="description">Descripcion</label>
+                <input
+                  type="text"
+                  name="description"
+                  id="description"
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
               <input
