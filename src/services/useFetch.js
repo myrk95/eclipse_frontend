@@ -1,13 +1,13 @@
 import { useCallback } from "react";
 
 export const useFetch = () => {
-  const API = "https://eclipse-backend-m8zi.onrender.com/api/v1/"
+  const API = "http://localhost:8000/api/v1/";
   const fetchData = useCallback(async (url, method, body) => {
     try {
-      const response = await fetch(API+url, {
-        method: method ?? 'GET',
+      const response = await fetch(API + url, {
+        method: method ?? "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: body ? JSON.stringify(body) : null,
       });
@@ -22,13 +22,13 @@ export const useFetch = () => {
 };
 
 export const useFetchForm = () => {
-  const API = "https://eclipse-backend-m8zi.onrender.com/api/v1/"
+  const API = "http://localhost:8000/api/v1/";
   const fetchData = useCallback(async (url, body) => {
     try {
-      const response = await fetch(API+url, {
-        method: 'POST',
-        
-        body: body ? JSON.stringify(body) : null,
+      const response = await fetch(API + url, {
+        method: "POST",
+
+        body: body,
       });
       return response.json();
     } catch (error) {

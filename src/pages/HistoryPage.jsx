@@ -1,19 +1,36 @@
-import React  from 'react';
-import {useState, useEffect } from "react";
-import Navbar from '../components/Navbar';
-import './History.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import { Link, useLocation } from "react-router-dom";
+import "./History.css";
 import { useFetch } from "../services/useFetch";
 
-
 const HistoryPage = () => {
-  const [datos, setDatos] = useState([]); 
-  
-  useEffect(() => { 
-    fetch("https://rickandmortyapi.com/api/character/?page=19") 
-    .then(res => res.json()) 
-    .then(data => setDatos(data.results)) 
-    .catch(err => console.error(err)); }, 
-  []); // [] asegura que se ejecute solo una vez al montar
+  const [historyList, setHistoryList] = useState([]);
+  const [hasUser, setHasUser] = useState(false);
+  const history = useFetch();
+  const location = useLocation();
+
+  useEffect(() => {
+    const storedUserId = JSON.parse(sessionStorage.getItem("userId"));
+    setHasUser(!!storedUserId);
+
+    if (storedUserId) {
+      history("history?user_id=" + storedUserId)
+        .then((data) => {
+          console.log("data", data);
+          // Si la respuesta tiene la propiedad 'historial', usamos esa. Si no, un array vacío.
+          setHistoryList(data?.historial || []);
+        })
+        .catch((err) => {
+          console.error(err);
+          setHistoryList([]);
+        });
+    } else {
+      setHistoryList([]); // Limpiar historial si no hay usuario
+    }
+  }, [location]);
+  console.log(historyList);
 
   return (
     <div className="scanner-page">
@@ -25,21 +42,45 @@ const HistoryPage = () => {
         </div>
       </div>
       <div className="scanner-list">
-         {datos.length > 0 ? (
-            datos.map((char) => (
-              <div key={char.id} className="scanner-item">
-                <img src={char.image} alt={char.name} />
-                <h3>{char.name}</h3>
-                <p>Estado: {char.status}</p>
-                <p>Especie: {char.species}</p>
-                <p>Origen: {char.origin.name}</p>
-              </div>
-            ))
-          ) : (
-            <p>Cargando personajes...</p>
-          )}
-        </div>
+        {!hasUser ? (
+          <div
+            className="no-user-message"
+            style={{
+              textAlign: "center",
+              marginTop: "2rem",
+              gridColumn: "1 / -1",
+            }}
+          >
+            <p>🔒 Inicia sesión para ver tu historial de escaneos.</p>
+          </div>
+        ) : historyList && historyList.length > 0 ? (
+          historyList.map((char, index) => (
+            <div key={char.lunar_id || index} className="scanner-item">
+              <img
+                src={char.imagen}
+                alt={char.nombre || "Scan"}
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
+              />
+              <h3>{char.nombre || "Sin nombre"}</h3>
+              <p>{char.descripcion}</p>
+              <p>
+                <strong>Resultado:</strong> {char.resultado}
+              </p>
+              <p>
+                <strong>Probabilidad:</strong> {char.probabilidad}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>No hay historial disponible.</p>
+        )}
       </div>
+    </div>
   );
 };
 

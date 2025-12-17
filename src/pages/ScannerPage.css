@@ -25,11 +25,13 @@
 }
 .button-form {
   background: linear-gradient(135deg, #2ecc71, #27ae60);
-  border-radius: 20px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 3px 8px rgba(46, 204, 113, 0.2);
-  color: white
+  color: white;
+  width: 100%;
+  padding: 0.5rem;
 }
 
 .scanner-header h1 {
@@ -130,7 +132,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 50%
+  );
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -218,7 +224,7 @@
 }
 
 .progress-steps:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 15px;
   left: 0;
@@ -245,7 +251,7 @@
 }
 
 .step:before {
-  content: '';
+  content: "";
   position: absolute;
   top: -5px;
   left: 50%;
@@ -304,7 +310,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .scanning-animation {
@@ -325,9 +333,18 @@
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .results-panel {
@@ -703,7 +720,7 @@
 }
 
 .team-info summary:after {
-  content: '▼';
+  content: "▼";
   transition: transform 0.3s ease;
 }
 
@@ -824,7 +841,7 @@
   .scanner-content {
     gap: 1.5rem;
   }
-  
+
   .upload-panel,
   .results-panel {
     padding: 1.5rem;
@@ -835,15 +852,15 @@
   .scanner-content {
     grid-template-columns: 1fr;
   }
-  
+
   .scanner-container {
     padding: 1.5rem;
   }
-  
+
   .action-buttons {
     flex-direction: column;
   }
-  
+
   .btn-secondary,
   .btn-danger {
     width: 100%;
@@ -854,40 +871,40 @@
   .scanner-header h1 {
     font-size: 2rem;
   }
-  
+
   .scanner-container {
     padding: 1rem;
   }
-  
+
   .upload-panel,
   .results-panel {
     padding: 1.5rem;
   }
-  
+
   .image-overlay {
     flex-direction: column;
     align-items: center;
     padding: 1rem;
   }
-  
+
   .btn-change-image,
   .btn-remove-image {
     width: 100%;
     margin-bottom: 0.5rem;
   }
-  
+
   .results-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .diagnosis-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .risk-indicator {
     align-items: flex-start;
   }
@@ -897,15 +914,15 @@
   .scanner-header h1 {
     font-size: 1.7rem;
   }
-  
+
   .subtitle {
     font-size: 1rem;
   }
-  
+
   .probability-value {
     font-size: 2rem;
   }
-  
+
   .diagnosis-text {
     font-size: 1.5rem;
   }
